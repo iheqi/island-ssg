@@ -1,7 +1,8 @@
 import { build as viteBuild, InlineConfig } from 'vite';
 import { join } from "path";
 import { CLIENT_ENTRY_PATH, SERVER_ENTRY_PATH  } from "./constants";
-import * as fs from "fs-extra";
+import fs from "fs-extra";
+import { pathToFileURL } from 'url'; 
 
 export async function build(root: string = process.cwd()) {
   // 1. bundle - client 端 + server 端
@@ -10,7 +11,7 @@ export async function build(root: string = process.cwd()) {
 
   // 2. 引入 ssr 入口模块
   const serverEntryPath = join(root, ".temp", "ssr-entry.js");
-  const { render } = require(serverEntryPath);
+  const { render } = await import(pathToFileURL(serverEntryPath));
 
   // 3. 服务端渲染，产出 HTML
   await renderPage(render, root, clientBundle);
