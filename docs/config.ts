@@ -1,5 +1,5 @@
 import { defineConfig } from '../dist/index.js';
 
 export default defineConfig({
-  title: '123'
+  title: '123456'
 });

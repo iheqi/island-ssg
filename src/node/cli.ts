@@ -11,11 +11,18 @@ cli
   .command("[root]", "start dev server")
   .alias('dev')
   .action(async (root: string) => {
-    root = root ? resolve(root) : process.cwd();
-    const server = await createDevServer(root);
-
-    await server.listen();
-    server.printUrls();
+    const createServer = async () => {
+      // 配置文件改动的时候，我们都会执行 restartServer 的逻辑
+      // 重新调用 dev.ts(构建产物为 dev.js) 的内容
+      const { createDevServer } = await import('./dev.js');
+      const server = await createDevServer(root, async () => {
+        await server.close();
+        await createServer();
+      });
+      await server.listen();
+      server.printUrls();
+    };
+    await createServer();
   });
 
 cli
