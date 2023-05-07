@@ -6,6 +6,7 @@
     "rootDir": "src" /* Specify the root folder within your source files. */,
     "jsx": "react-jsx",
     "moduleResolution": "node",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "src"
   }
 }

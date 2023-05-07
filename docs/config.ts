@@ -1,3 +1,5 @@
-export default {
-  a: 1
-}
+import { defineConfig } from '../dist/index.js';
+
+export default defineConfig({
+  title: '123'
+});
