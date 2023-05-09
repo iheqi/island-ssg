@@ -45,6 +45,26 @@ export class RouteService {
     return this.#routeData;
   }
 
+  // 生成路由配置。使用 @loadable/component 来进行组件的按需加载
+  generateRoutesCode() {
+    return `
+  import React from 'react';
+  import loadable from '@loadable/component';
+  ${this.#routeData
+  .map((route, index) => {
+    return `const Route${index} = loadable(() => import('${route.absolutePath}'));`;
+  })
+  .join('\n')}
+  export const routes = [
+  ${this.#routeData
+    .map((route, index) => {
+      return `{ path: '${route.routePath}', element: React.createElement(Route${index}) }`;
+    })
+    .join(',\n')}
+  ];
+  `;
+  }
+
   // 返回符合 react-router 的路由
   normalizeRoutePath(rawPath: string) {
     const routePath = rawPath.replace(/\.(.*)?$/, '').replace(/index$/, '');
