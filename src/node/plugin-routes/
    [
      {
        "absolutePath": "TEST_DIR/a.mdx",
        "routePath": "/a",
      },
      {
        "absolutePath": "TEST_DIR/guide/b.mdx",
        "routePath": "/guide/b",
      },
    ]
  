@@ -1,0 +1,10 @@
+[
+  {
+    "absolutePath": "/Users/heqi/learn/lesson/VitePress/island-ssg/src/node/plugin-routes/fixtures/a.mdx",
+    "routePath": "/a",
+  },
+  {
+    "absolutePath": "/Users/heqi/learn/lesson/VitePress/island-ssg/src/node/plugin-routes/fixtures/guide/b.mdx",
+    "routePath": "/guide/b",
+  },
+]

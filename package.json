@@ -7,7 +7,7 @@
     "start": "tsup --watch",
     "build": "tsup",
     "lint": "eslint --ext .ts,.tsx,.js,.jsx ./",
-    "test:init": "vitest run",
+    "test:unit": "vitest run",
     "test:ui": "vitest --ui",
     "prepare:e2e": "tsx scripts/prepare-e2e.ts",
     "test:e2e": "playwright test"
@@ -38,6 +38,7 @@
     "cac": "^6.7.14",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "fast-glob": "^3.2.12",
     "fs-extra": "^11.1.1",
     "prettier": "3.0.0-alpha.7-for-vscode",
     "react": "^18.2.0",
