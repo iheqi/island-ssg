@@ -3,10 +3,13 @@ import { join } from "path";
 import { CLIENT_ENTRY_PATH, SERVER_ENTRY_PATH  } from "./constants";
 import fs from "fs-extra";
 import { pathToFileURL } from 'url'; 
+import { SiteConfig } from 'shared/types';
+import { pluginConfig } from './plugin-island/config';
+import pluginReact from '@vitejs/plugin-react';
 
-export async function build(root: string = process.cwd()) {
+export async function build(root: string = process.cwd(), config: SiteConfig) {
   // 1. bundle - client 端 + server 端
-  const [clientBundle, serverBundle] = await bundle(root);
+  const [clientBundle, serverBundle] = await bundle(root, config);
 
 
   // 2. 引入 ssr 入口模块
@@ -17,15 +20,20 @@ export async function build(root: string = process.cwd()) {
   await renderPage(render, root, clientBundle);
 }
 
-export async function bundle(root: string) {
+export async function bundle(root: string, config: SiteConfig) {
+  
   const resolveViteConfig = (isServer: boolean): InlineConfig => ({
     mode: "production",
     root,
     // 注意加上这个插件，自动注入 import React from 'react'，避免 React is not defined 的错误
-    // plugin: [pluginReact()],
+    plugins: [pluginReact(), pluginConfig(config)],
+    ssr: {
+      // 注意加上这个配置，防止 cjs 产物中 require ESM 的产物，因为 react-router-dom 的产物为 ESM 格式
+      noExternal: ['react-router-dom']
+    },
     build: {
       ssr: isServer,
-      outDir: isServer ? ".temp" : "build",
+      outDir: isServer ? join(root, '.temp') : 'build',
       rollupOptions: {
         input: isServer ? SERVER_ENTRY_PATH : CLIENT_ENTRY_PATH,
         output: {

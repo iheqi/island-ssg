@@ -1,5 +1,5 @@
 import { cac } from 'cac';
-import { createDevServer } from './dev';
+import { resolveConfig } from './config';
 
 import { build } from './build';
 import { resolve } from 'path';
@@ -30,7 +30,8 @@ cli
   .action(async (root: string) => {
     try {
       root = resolve(root);
-      await build(root);
+      const config = await resolveConfig(root, 'build', 'production');
+      await build(root, config);
     } catch (error) {
       console.log(error);
     }

@@ -1,6 +1,7 @@
-import { relative } from 'path';
+import { relative, join } from 'path';
 import { Plugin, ViteDevServer } from 'vite';
 import { SiteConfig } from '../../shared/types/index';
+import { PACKAGE_ROOT } from "../constants";
 
 const SITE_DATA_ID = 'island:site-data';
 
@@ -10,7 +11,7 @@ const SITE_DATA_ID = 'island:site-data';
 
 export function pluginConfig(
   config: SiteConfig,
-  restartServer: () => Promise<void>
+  restartServer?: () => Promise<void>
 ): Plugin {
   let server: ViteDevServer | null = null;
 
@@ -29,6 +30,17 @@ export function pluginConfig(
       if (id === '\0' + SITE_DATA_ID) {
         return `export default ${JSON.stringify(config.siteData)}`;
       }
+    },
+
+    config() {
+      return {
+        root: PACKAGE_ROOT,
+        resolve: {
+          alias: {
+            '@runtime': join(PACKAGE_ROOT, 'src', 'runtime', 'index.ts')
+          }
+        }
+      };
     },
 
     // handleHotUpdate钩子
