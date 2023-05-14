@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsup --watch",
+    "dev": "tsup --watch",
     "build": "tsup",
     "lint": "eslint --ext .ts,.tsx,.js,.jsx ./",
     "test:unit": "vitest run",
@@ -57,14 +57,15 @@
     "rehype-autolink-headings": "^6.1.1",
     "rehype-slug": "^5.1.0",
     "rehype-stringify": "^9.0.3",
-    "remark-mdx": "^2.1.5",
-    "remark-stringify": "^10.0.2",
     "remark-frontmatter": "^4.0.1",
     "remark-gfm": "^3.0.1",
+    "remark-mdx": "^2.1.5",
     "remark-mdx-frontmatter": "^3.0.0",
     "remark-parse": "^10.0.1",
     "remark-rehype": "^10.1.0",
+    "remark-stringify": "^10.0.2",
     "shiki": "^0.14.2",
+    "unocss": "^0.51.12",
     "vite": "^4.3.4"
   }
 }
