@@ -1,10 +1,13 @@
 import { Plugin } from "vite";
 import { RouteService } from './RouteService';
 import React from 'react';
+import { PageModule } from 'shared/types';
+
 export interface Route {
   path: string;
   element: React.ReactElement;
   filePath: string;
+  preload: () => Promise<PageModule> // preload 方法，它的作用就是为了获取路由组件编译后的模块内容
 }
 
 
